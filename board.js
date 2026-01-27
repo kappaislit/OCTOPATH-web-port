@@ -83,9 +83,16 @@ document.getElementById("clearPosts").addEventListener("click", () => {
   const ok = confirm("この記録は焚き火にくべられ、二度と戻りません。\nそれでもよろしいですか？");
 
   if (!ok) return;
+const postList = document.getElementById("postList");
 
-  localStorage.removeItem("posts");
-  location.reload();
+  // フェードアウト開始
+  postList.classList.add("fading");
+
+  // アニメーションが終わったら削除
+  setTimeout(() => {
+    localStorage.removeItem("posts");
+    location.reload();
+  }, 800);
 });
 
 

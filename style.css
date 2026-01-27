@@ -161,6 +161,11 @@ body {
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
+  /*消すときの演出 */
+  transition: opacity 0.8s ease;
+}
+.post-list.fading {
+  opacity: 0;
 }
 .post {
   padding-bottom: 2rem;
