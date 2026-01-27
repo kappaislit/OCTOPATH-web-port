@@ -1,6 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-const posts = [
+    
+
+
+
+const defaultPosts = [
   {
     title: "オフィーリアの物語について",
     author: "旅人A",
@@ -14,6 +18,10 @@ const posts = [
     body: "静かな旋律なのに、どこか切なさがあってずっと聴いてしまう。"
   }
 ];
+
+/* ローカルストレージから復元 */
+const savedPosts = localStorage.getItem("posts");
+const posts = savedPosts ? JSON.parse(savedPosts): defaultPosts;
 
 const postList = document.getElementById("postList");
 
@@ -34,11 +42,7 @@ function renderPosts() {
 });
 }
 
-/* レンダーポストを呼び出す　これないとダミー２個が最初から表示されなかた　*/
-renderPosts();
-
-
-
+/* レンダーポストを呼び出す　これないとダミー２個が最初から表示されなかた　今は初回描画用*/
 const titleInput = document.getElementById("titleInput");
 const authorInput = document.getElementById("authorInput");
 const bodyInput = document.getElementById("bodyInput");
@@ -62,6 +66,7 @@ submitPost.addEventListener("click", () => {
   };
 
   posts.unshift(newPost);
+  localStorage.setItem("posts", JSON.stringify(posts));
   renderPosts();
 
   titleInput.value = "";
