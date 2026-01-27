@@ -223,3 +223,9 @@ body {
   color: #fff;
   cursor: pointer;
 }
+/*エラー用 */
+.error {
+  color: #c9b38c;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}

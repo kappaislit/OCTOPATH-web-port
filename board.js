@@ -45,9 +45,18 @@ const bodyInput = document.getElementById("bodyInput");
 const submitPost = document.getElementById("submitPost");
 
 submitPost.addEventListener("click", () => {
+    const errorMessage = document.getElementById("errorMessage");
+    errorMessage.textContent = "";
+
+  if (!titleInput.value || !bodyInput.value) {
+    errorMessage.textContent = "あなたの物語を聞かせてください。";
+    return;
+  }
+
+
   const newPost = {
     title: titleInput.value,
-    author: authorInput.value,
+    author: authorInput.value || "名もなき旅人",
     date: new Date().toISOString().slice(0, 10),
     body: bodyInput.value
   };
@@ -59,5 +68,6 @@ submitPost.addEventListener("click", () => {
   authorInput.value = "";
   bodyInput.value = "";
  });
+
 
 });
