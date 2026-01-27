@@ -1,3 +1,5 @@
+document.addEventListener("DOMContentLoaded", () => {
+
 const posts = [
   {
     title: "オフィーリアの物語について",
@@ -15,15 +17,47 @@ const posts = [
 
 const postList = document.getElementById("postList");
 
-posts.forEach(post => {
-  const article = document.createElement("article");
-  article.className = "post";
+function renderPosts() {
+  postList.innerHTML = "";
 
-  article.innerHTML = `
-    <h2 class="post-title">${post.title}</h2>
-    <p class="post-meta">投稿者：${post.author} ／ ${post.date}</p>
-    <p class="post-body">${post.body}</p>
-  `;
+  posts.forEach(post => {
+    const article = document.createElement("article");
+    article.className = "post";
 
-  postList.appendChild(article);
+    article.innerHTML = `
+      <h2 class="post-title">${post.title}</h2>
+      <p class="post-meta">投稿者：${post.author} ／ ${post.date}</p>
+      <p class="post-body">${post.body}</p>
+    `;
+
+    postList.appendChild(article);
+});
+}
+
+/* レンダーポストを呼び出す　これないとダミー２個が最初から表示されなかた　*/
+renderPosts();
+
+
+
+const titleInput = document.getElementById("titleInput");
+const authorInput = document.getElementById("authorInput");
+const bodyInput = document.getElementById("bodyInput");
+const submitPost = document.getElementById("submitPost");
+
+submitPost.addEventListener("click", () => {
+  const newPost = {
+    title: titleInput.value,
+    author: authorInput.value,
+    date: new Date().toISOString().slice(0, 10),
+    body: bodyInput.value
+  };
+
+  posts.unshift(newPost);
+  renderPosts();
+
+  titleInput.value = "";
+  authorInput.value = "";
+  bodyInput.value = "";
+ });
+
 });

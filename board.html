@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+  
+
   <title>旅人たちの記録｜静かな旅人たちの掲示板</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -22,6 +27,29 @@
       </p>
     </section>
 
+
+    <section class="post-form">
+  <h3>旅の記録を残す</h3>
+
+  <label>
+    タイトル
+    <input type="text" id="titleInput">
+  </label>
+
+  <label>
+    投稿者
+    <input type="text" id="authorInput">
+  </label>
+
+  <label>
+    本文
+    <textarea id="bodyInput"></textarea>
+  </label>
+
+  <button id="submitPost">投稿する</button>
+</section>
+
+    
     <!-- 投稿一覧 -->
     <section class="post-list" id="postList">
   <!-- JSで投稿が入る -->
@@ -36,6 +64,7 @@
 
   <!--スクリプト board.jsと繋がる-->
 <script src="board.js"></script>
+
 
 
 </body>
