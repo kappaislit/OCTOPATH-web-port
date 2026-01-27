@@ -21,7 +21,8 @@ const defaultPosts = [
 
 /* ローカルストレージから復元 */
 const savedPosts = localStorage.getItem("posts");
-const posts = savedPosts ? JSON.parse(savedPosts): defaultPosts;
+const userPosts = savedPosts ? JSON.parse(savedPosts) : [];
+let posts = [...defaultPosts, ...userPosts];
 
 
 
@@ -75,8 +76,10 @@ submitPost.addEventListener("click", () => {
     body: bodyInput.value
   };
 
-  posts.unshift(newPost);
-  localStorage.setItem("posts", JSON.stringify(posts));
+  /* 投稿処理 */
+  userPosts.unshift(newPost);
+  localStorage.setItem("posts", JSON.stringify(userPosts));
+  posts = [...defaultPosts, ...userPosts];
   renderPosts();
 
   titleInput.value = "";
@@ -89,6 +92,8 @@ function burnPost(index, article) {
   const ok = confirm("この記録を焚き火にくべますか？");
   if (!ok) return;
 
+
+  
   // SE再生
   const fireSound = document.getElementById("fireSound");
   fireSound.currentTime = 0;
@@ -98,8 +103,16 @@ function burnPost(index, article) {
   article.classList.add("burning");
 
   setTimeout(() => {
-    posts.splice(index, 1);
-    localStorage.setItem("posts", JSON.stringify(posts));
+    if (index < defaultPosts.length) {
+      // ダミー → 表示から消すだけ
+      posts.splice(index, 1);
+    } else {
+      // ユーザー投稿
+      const userIndex = index - defaultPosts.length;
+      userPosts.splice(userIndex, 1);
+      localStorage.setItem("posts", JSON.stringify(userPosts));
+      posts = [...defaultPosts, ...userPosts];
+    }
     renderPosts();
   }, 600);
 }
