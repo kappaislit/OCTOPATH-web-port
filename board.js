@@ -23,6 +23,8 @@ const defaultPosts = [
 const savedPosts = localStorage.getItem("posts");
 const posts = savedPosts ? JSON.parse(savedPosts): defaultPosts;
 
+
+
 const postList = document.getElementById("postList");
 
 function renderPosts() {
@@ -43,6 +45,8 @@ function renderPosts() {
 }
 
 /* レンダーポストを呼び出す　これないとダミー２個が最初から表示されなかた　今は初回描画用*/
+renderPosts();
+
 const titleInput = document.getElementById("titleInput");
 const authorInput = document.getElementById("authorInput");
 const bodyInput = document.getElementById("bodyInput");
@@ -73,6 +77,16 @@ submitPost.addEventListener("click", () => {
   authorInput.value = "";
   bodyInput.value = "";
  });
+
+ /* 投稿を消す */
+document.getElementById("clearPosts").addEventListener("click", () => {
+  const ok = confirm("この記録は焚き火にくべられ、二度と戻りません。\nそれでもよろしいですか？");
+
+  if (!ok) return;
+
+  localStorage.removeItem("posts");
+  location.reload();
+});
 
 
 });
