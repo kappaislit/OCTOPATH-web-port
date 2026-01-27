@@ -30,7 +30,7 @@ const postList = document.getElementById("postList");
 function renderPosts() {
   postList.innerHTML = "";
 
-  posts.forEach(post => {
+  posts.forEach((post,index) => {
     const article = document.createElement("article");
     article.className = "post";
 
@@ -38,7 +38,13 @@ function renderPosts() {
       <h2 class="post-title">${post.title}</h2>
       <p class="post-meta">投稿者：${post.author} ／ ${post.date}</p>
       <p class="post-body">${post.body}</p>
+      <button class="burn-btn">焚き火にくべる</button>
     `;
+
+const burnBtn = article.querySelector(".burn-btn");
+
+    burnBtn.addEventListener("click", () => burnPost(index, article));
+
 
     postList.appendChild(article);
 });
@@ -79,21 +85,25 @@ submitPost.addEventListener("click", () => {
  });
 
  /* 投稿を消す */
-document.getElementById("clearPosts").addEventListener("click", () => {
-  const ok = confirm("この記録は焚き火にくべられ、二度と戻りません。\nそれでもよろしいですか？");
-
+function burnPost(index, article) {
+  const ok = confirm("この記録を焚き火にくべますか？");
   if (!ok) return;
-const postList = document.getElementById("postList");
 
-  // フェードアウト開始
-  postList.classList.add("fading");
+  // SE再生
+  const fireSound = document.getElementById("fireSound");
+  fireSound.currentTime = 0;
+  fireSound.play();
 
-  // アニメーションが終わったら削除
+  // フェードアウト
+  article.classList.add("burning");
+
   setTimeout(() => {
-    localStorage.removeItem("posts");
-    location.reload();
-  }, 800);
-});
+    posts.splice(index, 1);
+    localStorage.setItem("posts", JSON.stringify(posts));
+    renderPosts();
+  }, 600);
+}
+
 
 
 });
