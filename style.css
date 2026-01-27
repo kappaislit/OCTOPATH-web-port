@@ -140,3 +140,49 @@ body {
   line-height: 1.8;
   opacity: 0.85;
 }
+
+
+
+
+
+/* ===== 掲示板 ===== */
+
+.board {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+.board-intro {
+  text-align: center;
+  margin-bottom: 3rem;
+  opacity: 0.8;
+  font-size: 0.9rem;
+}
+
+.post-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.post {
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(234, 230, 220, 0.15);
+}
+
+.post-title {
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+}
+
+.post-meta {
+  font-size: 0.75rem;
+  opacity: 0.6;
+  margin-bottom: 0.8rem;
+}
+
+.post-body {
+  font-size: 0.95rem;
+  line-height: 1.9;
+}
