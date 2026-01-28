@@ -119,4 +119,6 @@ function burnPost(index, article) {
 
 
 
+
+
 });
