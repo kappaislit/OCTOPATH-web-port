@@ -1,24 +1,16 @@
-import express from "express";
-import cors from "cors";
-
+const express = require("express");
 const app = express();
-app.use(cors());
+const PORT = 3000;
+
+// JSONを受け取れるようにする
 app.use(express.json());
 
-let posts = [];
-
-app.get("/posts", (req, res) => {
-  res.json(posts);
+// テスト用ルート
+app.get("/", (req, res) => {
+  res.send("サーバー起動中 🔥");
 });
 
-app.post("/posts", (req, res) => {
-  posts.unshift(req.body);
-  res.json({ success: true });
+// サーバー起動
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
 });
-
-app.delete("/posts/:id", (req, res) => {
-  posts = posts.filter(p => p.id !== req.params.id);
-  res.json({ success: true });
-});
-
-app.listen(3000);

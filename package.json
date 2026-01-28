@@ -1,0 +1,25 @@
+{
+  "name": "octopath-traveler-board",
+  "version": "1.0.0",
+  "description": "オクトパストラベラーを心から愛する人たちが、\r 静かに語り、誰かの言葉にそっと出会える場所を目指した\r コンセプトコミュニティサイト。",
+  "homepage": "https://github.com/kappaislit/OCTOPATH-web-port#readme",
+  "bugs": {
+    "url": "https://github.com/kappaislit/OCTOPATH-web-port/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kappaislit/OCTOPATH-web-port.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "board.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
