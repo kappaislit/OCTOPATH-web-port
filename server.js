@@ -1,16 +1,22 @@
 const express = require("express");
+const path = require("path");
+
 const app = express();
 const PORT = 3000;
 
-// JSONを受け取れるようにする
-app.use(express.json());
+// public フォルダを公開する
+app.use(express.static(path.join(__dirname, "public")));
 
-// テスト用ルート
+// トップページ
 app.get("/", (req, res) => {
-  res.send("サーバー起動中 🔥");
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// サーバー起動
+// 掲示板ページ
+app.get("/board", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "board.html"));
+});
+
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`🔥 Server running at http://localhost:${PORT}`);
 });
