@@ -1,3 +1,11 @@
+const fs = require("fs");
+
+const DATA_PATH = "./posts.json";
+
+
+
+
+const { randomUUID } = require("crypto");
 const express = require("express");
 const path = require("path");
 
@@ -11,7 +19,11 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
 // 🔥 投稿データ（サーバー側）
-let posts = [
+let posts = [];
+if (fs.existsSync(DATA_PATH)) {
+  posts = JSON.parse(fs.readFileSync(DATA_PATH, "utf-8"));
+}else{
+  posts = [
   {
     id: 1,
     title: "オフィーリアの物語について",
@@ -27,6 +39,13 @@ let posts = [
     body: "静かな旋律なのに、どこか切なさがあってずっと聴いてしまう。"
   }
 ];
+savePosts();
+}
+
+function savePosts() {
+  fs.writeFileSync(DATA_PATH, JSON.stringify(posts, null, 2));
+}
+
 
 // 投稿一覧
 app.get("/api/posts", (req, res) => {
@@ -44,8 +63,7 @@ app.post("/api/posts", (req, res) => {
   const newPost = {
 
     /* id付与 */
-    id: Date.now(),
-
+    id: randomUUID(),
     title,
     author: author || "名もなき旅人",
     date: new Date().toISOString().slice(0, 10),
@@ -53,7 +71,10 @@ app.post("/api/posts", (req, res) => {
   };
 
   posts.unshift(newPost);
+  savePosts();
   res.json(newPost);
+  
+
 });
 
 // 起動
@@ -63,10 +84,10 @@ app.listen(PORT, () => {
 
 // DELETE APIを追加
 app.delete("/api/posts/:id", (req, res) => {
-  const id = Number(req.params.id);
+  const { id } = req.params;
 
   posts = posts.filter(post => post.id !== id);
-
-  res.json({ success: true });
+savePosts();
+res.json({ success: true });
 });
 
