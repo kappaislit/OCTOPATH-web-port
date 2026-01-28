@@ -30,6 +30,8 @@ submitPost.addEventListener("click", async () => {
     })
   });
 
+  
+
   titleInput.value = "";
   authorInput.value = "";
   bodyInput.value = "";
