@@ -9,6 +9,36 @@ document.addEventListener("DOMContentLoaded", () => {
     renderPosts();
   }
 
+const titleInput = document.getElementById("titleInput");
+const authorInput = document.getElementById("authorInput");
+const bodyInput = document.getElementById("bodyInput");
+const submitPost = document.getElementById("submitPost");
+
+submitPost.addEventListener("click", async () => {
+  if (!titleInput.value || !bodyInput.value) {
+    alert("タイトルと本文は必須です");
+    return;
+  }
+
+  await fetch("/api/posts", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      title: titleInput.value,
+      author: authorInput.value,
+      body: bodyInput.value
+    })
+  });
+
+  titleInput.value = "";
+  authorInput.value = "";
+  bodyInput.value = "";
+
+  loadPosts(); // ← 今の設計に完全に合ってる
+});
+
+
+
   function renderPosts() {
     postList.innerHTML = "";
 
@@ -23,15 +53,16 @@ document.addEventListener("DOMContentLoaded", () => {
         <button class="burn-btn">焚き火にくべる</button>
       `;
 
-      postList.appendChild(article);
-    });
-  }
+      const burnBtn = article.querySelector(".burn-btn");
 
-  const burnBtn = article.querySelector(".burn-btn");
-
-burnBtn.addEventListener("click", async () => {
+      burnBtn.addEventListener("click", async () => {
   const ok = confirm("この記録を焚き火にくべますか？");
   if (!ok) return;
+
+  // SE追加
+  const fireSound = document.getElementById("fireSound");
+fireSound.currentTime = 0;
+fireSound.play();
 
   await fetch(`/api/posts/${post.id}`, {
     method: "DELETE"
@@ -44,6 +75,9 @@ burnBtn.addEventListener("click", async () => {
   }, 600);
 });
 
+      postList.appendChild(article);
+    });
+  }
 
   loadPosts();
 });
