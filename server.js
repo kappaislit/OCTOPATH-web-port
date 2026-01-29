@@ -1,3 +1,6 @@
+// 投稿の保存・削除・管理
+
+
 const fs = require("fs");
 
 const DATA_PATH = "./posts.json";
@@ -10,7 +13,7 @@ const express = require("express");
 const path = require("path");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // JSON受け取り
 app.use(express.json());
@@ -86,7 +89,11 @@ app.listen(PORT, () => {
 app.delete("/api/posts/:id", (req, res) => {
   const { id } = req.params;
 
-  posts = posts.filter(post => post.id !== id);
+  posts = posts.filter(post => {
+  if (typeof post.id === "number") return true; // ダミーは残す
+  return post.id !== id;
+});
+
 savePosts();
 res.json({ success: true });
 });

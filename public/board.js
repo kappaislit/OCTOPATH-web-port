@@ -1,3 +1,6 @@
+// 画面操作・fetch
+
+
 document.addEventListener("DOMContentLoaded", () => {
   let posts = [];
 
